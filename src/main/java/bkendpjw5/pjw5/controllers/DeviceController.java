@@ -7,6 +7,7 @@ import bkendpjw5.pjw5.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -46,5 +47,11 @@ public class DeviceController {
     private Device updateDevice(@PathVariable long id, @RequestBody @Validated DeviceDTO payload, BindingResult validation) {
         if (validation.hasErrors()) throw new BadRequestException(validation.getAllErrors());
         else return ds.findByIdAndUpdate(id, payload);
+    }
+
+    @PutMapping("/{deviceId}/assign/{employeeId}")
+    public ResponseEntity<Device> assignDeviceToEmployee(@PathVariable Long deviceId, @PathVariable Long employeeId){
+        Device updatedDevice = ds.assignEmployeeToDevice(deviceId, employeeId);
+        return ResponseEntity.ok(updatedDevice);
     }
 }

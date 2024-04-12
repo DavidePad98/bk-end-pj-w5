@@ -26,4 +26,7 @@ public class Device {
         this.status = status;
         this.employee = employee;
     }
+
+    public Device() {
+    }
 }

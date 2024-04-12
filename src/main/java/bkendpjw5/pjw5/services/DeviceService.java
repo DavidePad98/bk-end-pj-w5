@@ -2,6 +2,7 @@ package bkendpjw5.pjw5.services;
 
 import bkendpjw5.pjw5.dao.DeviceDAO;
 import bkendpjw5.pjw5.entities.Device;
+import bkendpjw5.pjw5.entities.Employee;
 import bkendpjw5.pjw5.exceptions.NotFoundException;
 import bkendpjw5.pjw5.payloads.DeviceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class DeviceService {
         return dDAO.save(new Device(
                 newDevice.type(),
                 newDevice.status(),
-                es.findById(newDevice.employee())));
+                null
+//                es.findById(newDevice.employee())
+                ));
     }
 
     public Device findById(long id) {
@@ -47,9 +50,15 @@ public class DeviceService {
         Device found = this.findById(id);
         found.setType(newDevice.type());
         found.setStatus(newDevice.status());
-        found.setEmployee(es.findById(newDevice.employee()));
+//        found.setEmployee(es.findById(newDevice.employee()));
         dDAO.save(found);
         return found;
+    }
 
+    public  Device assignEmployeeToDevice(long deviceId, long employeeId){
+        Device d = findById(deviceId);
+        Employee e = es.findById(employeeId);
+        d.setEmployee(e);
+        return dDAO.save(d);
     }
 }
