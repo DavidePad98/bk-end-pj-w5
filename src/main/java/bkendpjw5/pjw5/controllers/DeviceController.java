@@ -49,9 +49,17 @@ public class DeviceController {
         else return ds.findByIdAndUpdate(id, payload);
     }
 
+
     @PutMapping("/{deviceId}/assign/{employeeId}")
-    public ResponseEntity<Device> assignDeviceToEmployee(@PathVariable Long deviceId, @PathVariable Long employeeId){
-        Device updatedDevice = ds.assignEmployeeToDevice(deviceId, employeeId);
-        return ResponseEntity.ok(updatedDevice);
+    public Device assignEmployeeToDevice(@PathVariable Long deviceId, @PathVariable Long employeeId) {
+        return ds.assignEmployeeToDevice(deviceId, employeeId);
     }
+
+    // HO TROVATO QUESTO @ResponseEntity CHE RESTITUISCE BODY, HEADER E LO STATO DELLA RISPOSTA, NON LO AVEVO MAI USATO
+    //L' HO PROVATO E SEMBRA FUNZIONARE COME L'ALTRO METODO CHE HO SCRITTO
+//    @PutMapping("/{deviceId}/assign/{employeeId}")
+//    public ResponseEntity<Device> assignDeviceToEmployee(@PathVariable Long deviceId, @PathVariable Long employeeId){
+//        Device updatedDevice = ds.assignEmployeeToDevice(deviceId, employeeId);
+//        return ResponseEntity.ok(updatedDevice);
+//    }
 }
